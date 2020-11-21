@@ -23,7 +23,7 @@ public class Pedido implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer idInteger;
+	private Integer id;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
@@ -48,20 +48,29 @@ public class Pedido implements Serializable {
 		
 	}
 
-	public Pedido(Integer idInteger, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
-		this.idInteger = idInteger;
+		this.id = id;
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
-
-	public Integer getIdInteger() {
-		return idInteger;
+	
+	public double getTotalPedido() {
+		double soma = 0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		
+		return soma;
 	}
 
-	public void setIdInteger(Integer idInteger) {
-		this.idInteger = idInteger;
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getInstante() {
@@ -108,7 +117,7 @@ public class Pedido implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idInteger == null) ? 0 : idInteger.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -121,10 +130,10 @@ public class Pedido implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		if (idInteger == null) {
-			if (other.idInteger != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idInteger.equals(other.idInteger))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
