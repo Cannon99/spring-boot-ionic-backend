@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.cursomc.domain.Categoria;
@@ -32,6 +33,9 @@ import com.example.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPassEnc;
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -119,11 +123,11 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Cliente cli1 = new Cliente(null, "O Rei", "thiagofurlan68@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "O Rei", "thiagofurlan68@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bCryptPassEnc.encode("9999"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
-		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", c1, cli1);
-		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", c2, cli1);
+		Endereco e1 = new Endereco(null, "Rua do Rei", "900", "Apto 909", "Jardim do Rei", "38220834", c1, cli1);
+		Endereco e2 = new Endereco(null, "Avenida do Rei", "105", "Sala 999", "Centro", "38777012", c2, cli1);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
