@@ -1,5 +1,7 @@
 package com.example.cursomc.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +16,8 @@ public interface PedidoRepository extends JpaRepository <Pedido, Integer> {
 	
 	@Transactional(readOnly=true)
 	Page<Pedido> findByCliente(Cliente cli, Pageable pageRequest);
-
+	
+	@Transactional(readOnly=true)
+	Optional<Pedido> findById(Integer id);
+	
 }
